@@ -12,6 +12,16 @@ let currentRound=0;
 
 let gameOver=false;
 
+let goodBeep;
+
+let badBeep;
+
+
+function preload(){
+    badBeep = loadSound("bad beep.mp3");
+    goodBeep = loadSound("good beep.mp3");
+}
+
 
 
 function Win(){
@@ -25,6 +35,7 @@ function Win(){
 /*this custom function advances the user to the next Qircle, if they haven't finished the currentRound. 
 If currentRound is complete, user advances to next Round.*/  
 function Advance(){
+    goodBeep.play();
     if (nextQircle.index<4){
         //the next qircle in the array is being called up via the index property 
        nextQircle=qircleArray[nextQircle.index+1] 
@@ -40,6 +51,7 @@ function Advance(){
 }
 
 function Lose(){
+    badBeep.play();
     //prints lose to the console and onto the screen
     print: 'lose'
     fill ('red');
