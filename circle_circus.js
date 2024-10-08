@@ -1,34 +1,41 @@
+//this array holds all of the "Qircles", which is a term i created not to confuse myself with the built in "circles" in p5.
 let qircleArray;
 
+//this array holds all of the colors for each Qircle
 let qircleColors;
 
+//this array holds all of the key presses that correspond to each Qircle
 let qircleKeysArray;
 
-let qircleKeysIndex;
-
+// this variable denotes the value of the upcoming Qircle 
 let nextQircle;
 
+//this variable holds the value of the current round, which is set to start at 0
 let currentRound=0;
 
+//this variable holds the boolean for the gameOver state, which stops refreshing the circles from being re drawn
 let gameOver=false;
 
+//audio for correct Qircle key press
 let goodBeep;
 
+//audio for incorrect Qircle key press
 let badBeep;
 
-
+//audio preload
 function preload(){
     badBeep = loadSound("bad beep.mp3");
     goodBeep = loadSound("good beep.mp3");
 }
 
 
-
+//prints the text for the Win conditions
 function Win(){
     fill ('green');
     textAlign(CENTER);
     textSize(50);
     text('Fortunately, you win!', 640,600);
+    //stops the circle drawing loop
     gameOver=true;
 }
     
@@ -44,16 +51,15 @@ function Advance(){
     else if  (currentRound<5){
         roundStart()
     }
-
+    // if the rounds are all completed without error, win screen appears
     else{
         Win()
     }
 }
 
-function Lose(){
+// Lose screen appears
+function Lose(){ 
     badBeep.play();
-    //prints lose to the console and onto the screen
-    print: 'lose'
     fill ('red');
     textAlign(CENTER);
     textSize(50);
@@ -62,6 +68,7 @@ function Lose(){
     
 }
 
+// If else statements that matches keypress to the color of the color property of nextQircle, as well as triggering the Advance or Lose function
 function keyPressed(){
     if (key ==='r'){
         if (nextQircle.color==='red'){
@@ -113,6 +120,7 @@ function keyPressed(){
             Lose()
         }
     }
+    //if user presses a key not referenced above, lose screen appears
     else{
         Lose()
     }
@@ -132,7 +140,7 @@ function roundStart(){
     currentRound+=1
 }
 
-
+//this class contains all off the properties and functions of each Qircle
 class Qircle{
     constructor(index,color,xPos, yPos, dia){
         this.index=index;
@@ -142,17 +150,6 @@ class Qircle{
         this.dia= dia;
 
     }
-// this object helps the computer translate from a keypress to a color on the screen and back again
-    qircleCodes={
-    'red':'r','r':'red',
-    'blue':'b','b':'blue',
-    'green':'g','g':'green',
-    'white':'w','w':'white',
-    'purple':'p','p':'purple',
-    'yellow':'y','y':'yellow',
-    'orange':'o','o':'orange',
-    }
-
 
     drawQircle(){
         fill(this.color);
@@ -164,7 +161,7 @@ class Qircle{
     }
 }
 
-
+//this initializes all of the Arrays, and creates the canvas, and calls roundStart when canvas starts
 function setup(){
     createCanvas(1280,720);
 
@@ -192,7 +189,7 @@ function setup(){
     roundStart()
 }
 
-
+// instructions for the game, and a for loop that says, if gameOver is false, a Qircle should appear until 5 are on the screen.
 function draw(){
     if(gameOver===false){
         background('black');
@@ -208,6 +205,7 @@ function draw(){
     fill ('white');
     textAlign(LEFT);
     textSize(20);
+    // a round counter that calls the current round
     text ('round'+ currentRound + '!', 50,40)
     }
     
